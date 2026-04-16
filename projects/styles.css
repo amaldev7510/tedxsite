@@ -1,0 +1,295 @@
+:root {
+    --bg-color: #0b0c10;
+    --primary: #66fcf1;
+    --secondary: #45a29e;
+    --text-main: #c5c6c7;
+    --glass-bg: rgba(11, 12, 16, 0.7);
+    --glass-border: rgba(102, 252, 241, 0.3);
+    
+    --accent-red: #ff3366;
+    --accent-green: #20c20e;
+    --accent-yellow: #fcd028;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: 'Rajdhani', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+#game-container {
+    position: relative;
+    width: 800px;
+    height: 600px;
+    box-shadow: 0 0 40px rgba(102, 252, 241, 0.2);
+    border-radius: 8px;
+    background: radial-gradient(circle at center, #1f2833 0%, #0b0c10 100%);
+    overflow: hidden;
+}
+
+#gameCanvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+/* Background Stars Effect */
+#stars {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 1;
+    background-image: 
+        radial-gradient(1px 1px at 20px 30px, #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 40px 70px, #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 50px 160px, #fff, rgba(0,0,0,0)),
+        radial-gradient(1.5px 1.5px at 90px 40px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0)),
+        radial-gradient(1.5px 1.5px at 160px 120px, #fff, rgba(0,0,0,0));
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    animation: zoom 10s infinite linear;
+    opacity: 0.3;
+}
+
+@keyframes zoom {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Gravity Indicator */
+#gravity-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 4rem;
+    font-weight: 900;
+    opacity: 0.05;
+    text-align: center;
+    pointer-events: none;
+    transition: all 1s ease;
+}
+
+#gravity-indicator.direction-down {
+    color: var(--primary);
+}
+
+#gravity-indicator.direction-up {
+    color: var(--accent-red);
+    text-shadow: 0 0 20px var(--accent-red);
+    opacity: 0.15;
+}
+
+#gravity-indicator.direction-up .arrow {
+    transform: rotate(180deg);
+}
+
+.arrow {
+    width: 0; 
+    height: 0; 
+    border-left: 40px solid transparent;
+    border-right: 40px solid transparent;
+    border-top: 60px solid currentColor;
+    margin: 0 auto 20px auto;
+    transition: transform 0.5s ease;
+}
+
+/* UI Layer */
+#ui-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    pointer-events: none; /* Let clicks pass through to canvas when playing */
+}
+
+/* HUD */
+#hud {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 30px;
+    background: linear-gradient(to bottom, rgba(11, 12, 16, 0.9), transparent);
+    font-family: 'Orbitron', sans-serif;
+}
+
+.hud-item {
+    text-align: center;
+    color: var(--primary);
+    text-shadow: 0 0 10px rgba(102, 252, 241, 0.5);
+    font-size: 1.5rem;
+}
+
+.hud-item .label {
+    font-size: 0.8rem;
+    color: var(--text-main);
+    letter-spacing: 2px;
+}
+
+/* Screens */
+.screen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 40px;
+    text-align: center;
+    pointer-events: auto; /* Re-enable clicks for screens */
+    width: 80%;
+    max-width: 500px;
+}
+
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Typography & Effects */
+h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3rem;
+    margin-bottom: 10px;
+    color: var(--primary);
+    text-shadow: 0 0 15px var(--primary);
+}
+
+h2 {
+    font-size: 2rem;
+    color: var(--secondary);
+    margin-bottom: 20px;
+    letter-spacing: 4px;
+}
+
+p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.instructions {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    text-align: left;
+    border-left: 4px solid var(--accent-red);
+}
+
+.text-red {
+    color: var(--accent-red);
+    text-shadow: 0 0 15px var(--accent-red);
+}
+
+.text-green {
+    color: var(--accent-green);
+    text-shadow: 0 0 15px var(--accent-green);
+}
+
+/* Buttons */
+.cyber-btn {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--bg-color);
+    background: var(--primary);
+    border: none;
+    padding: 15px 40px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+    box-shadow: 0 0 20px rgba(102, 252, 241, 0.4);
+}
+
+.cyber-btn:hover {
+    background: #fff;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+    transform: translateY(-2px);
+}
+
+.cyber-btn:active {
+    transform: translateY(2px);
+}
+
+/* Glitch Effect */
+.glitch {
+    position: relative;
+}
+
+.glitch::before, .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-color);
+}
+
+.glitch::before {
+    left: 2px;
+    text-shadow: -2px 0 var(--accent-red);
+    clip: rect(24px, 550px, 90px, 0);
+    animation: glitch-anim 3s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+    left: -2px;
+    text-shadow: -2px 0 var(--primary);
+    clip: rect(85px, 550px, 140px, 0);
+    animation: glitch-anim 2.5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+    0% { clip: rect(13px, 9999px, 87px, 0); }
+    5% { clip: rect(62px, 9999px, 20px, 0); }
+    10% { clip: rect(3px, 9999px, 45px, 0); }
+    15% { clip: rect(69px, 9999px, 86px, 0); }
+    20% { clip: rect(44px, 9999px, 5px, 0); }
+    25% { clip: rect(81px, 9999px, 98px, 0); }
+    30% { clip: rect(2px, 9999px, 57px, 0); }
+    35% { clip: rect(85px, 9999px, 13px, 0); }
+    40% { clip: rect(12px, 9999px, 53px, 0); }
+    45% { clip: rect(68px, 9999px, 40px, 0); }
+    50% { clip: rect(31px, 9999px, 57px, 0); }
+    55% { clip: rect(98px, 9999px, 90px, 0); }
+    60% { clip: rect(10px, 9999px, 63px, 0); }
+    65% { clip: rect(54px, 9999px, 4px, 0); }
+    70% { clip: rect(87px, 9999px, 73px, 0); }
+    75% { clip: rect(15px, 9999px, 16px, 0); }
+    80% { clip: rect(60px, 9999px, 94px, 0); }
+    85% { clip: rect(39px, 9999px, 2px, 0); }
+    90% { clip: rect(83px, 9999px, 68px, 0); }
+    95% { clip: rect(21px, 9999px, 47px, 0); }
+    100% { clip: rect(72px, 9999px, 8px, 0); }
+}

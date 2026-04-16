@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anti-Gravity Breakout</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Background elements for visual effects -->
+        <div id="stars"></div>
+        <div id="gravity-indicator" class="direction-down">
+            <div class="arrow"></div>
+            GRAVITY
+        </div>
+
+        <!-- The game canvas -->
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+
+        <!-- UI Overlay -->
+        <div id="ui-layer">
+            <div id="hud" class="hidden">
+                <div class="hud-item"><span class="label">SCORE</span><br><span id="score">0</span></div>
+                <div class="hud-item"><span class="label">LIVES</span><br><span id="lives">3</span></div>
+                <div class="hud-item"><span class="label">LEVEL</span><br><span id="level">1</span></div>
+            </div>
+
+            <div id="start-screen" class="screen glass-panel">
+                <h1 class="glitch" data-text="ANTI-GRAVITY">ANTI-GRAVITY</h1>
+                <h2>BREAKOUT</h2>
+                <p>Move your paddle to break the blocks.</p>
+                <div class="instructions">
+                    <p>🕹️ <b>Controls:</b> Mouse or Left/Right Arrows</p>
+                    <p>⚠️ <b>Warning:</b> Gravity reverses periodically!</p>
+                </div>
+                <button id="start-btn" class="cyber-btn">START SYS_TEM</button>
+            </div>
+
+            <div id="game-over-screen" class="screen glass-panel hidden">
+                <h1 class="text-red">SYSTEM FAILURE</h1>
+                <p>FINAL SCORE: <span id="final-score">0</span></p>
+                <button id="restart-btn" class="cyber-btn">REBOOT</button>
+            </div>
+
+            <div id="win-screen" class="screen glass-panel hidden">
+                <h1 class="text-green">AREA CLEARED</h1>
+                <p>SCORE: <span id="win-score">0</span></p>
+                <button id="next-level-btn" class="cyber-btn">PROCEED</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
