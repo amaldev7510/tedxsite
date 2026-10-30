@@ -1,3 +1,3 @@
 # tedxsite
 
-amal 
+amal
